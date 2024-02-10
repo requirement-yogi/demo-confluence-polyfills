@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.playsql</groupId>
+    <artifactId>requirementyogi-parent</artifactId>
+    <version>3.8-SNAPSHOT</version>
+
+    <organization>
+        <name>Requirement Yogi</name>
+        <url>https://www.requirementyogi.com/</url>
+    </organization>
+
+    <name>Requirement Yogi Parent</name>
+    <description>Parent pom.xml</description>
+    <packaging>pom</packaging>
+
+    <licenses>
+        <license>
+            <name>Commercial</name>
+            <url>https://docs.requirementyogi.com/legal/eula</url>
+            <comments>The Requirement Yogi EULA applies to this software - See https://docs.requirementyogi.com/legal/eula</comments>
+        </license>
+    </licenses>
+
+    <modules>
+        <module>libs/atlassian-polyfills</module>
+        <module>libs/utils</module>
+        <module>libs/confluence-parent-pom</module>
+        <module>libs/confluence-polyfills-base</module>
+        <module>libs/confluence-polyfills-719</module>
+        <module>libs/confluence-polyfills-720</module>
+        <module>libs/confluence-polyfills-850</module>
+        <module>libs/utils-confluence</module>
+        <module>libs/shared-services</module>
+        <module>devconsole</module>
+        <module>requirementyogi</module>
+        <module>requirementyogijira</module>
+        <module>rytestcompliance</module>
+        <module>jiradevconsole</module>
+        <module>integration-tests</module>
+        <!--
+        Those two modules are included in the activated-by-default -Pextensions profile
+        <module>extensions-reqif</module>
+        <module>extensions-comala</module>
+        -->
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <!-- We set the plugin versions to get a deterministic build. To list versions to upgrade, see
+                 mvn versions:display-dependency-updates
+                 mvn versions:display-plugin-updates
+                 mvn versions:display-property-updates -->
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.12.1</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.6.3</version>
+                    <configuration>
+                        <doclint>none</doclint>
+                        <show>private</show>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.16.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${libs.dependency-check-maven.version}</version>
+                </plugin>
+                <plugin>
+                    <!-- This plugin, configured in <pluginManagement>, pre-configures the build.
+                         But you need to call it in the child's <build> section.
+                     -->
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>2.4.0</version>
+                    <configuration>
+                        <!--
+                            You don't need to run the license plugin manually, it is part of the build (see executions).
+                            It retrieves all licenses of all dependencies into src/licenses/THIRD-PARTY-included-modules.txt
+
+                            NB: How to retrieve licenses on a new project:
+                            mvn clean license:download-licenses
+                        -->
+                        <projectName>${project.name}</projectName>
+
+                        <organizationName>Requirement Yogi S.A.S.U.</organizationName>
+                        <inceptionYear>2014</inceptionYear>
+
+                        <!-- Skips the goal download-licenses -->
+                        <skipDownloadLicenses>false</skipDownloadLicenses>
+                        <!-- This is not an opensource project -->
+                        <skipUpdateLicense>true</skipUpdateLicense>
+                        <!-- The license of each module -->
+                        <licenseFile>${project.basedir}/src/license/LICENSE.txt</licenseFile>
+                        <useMissingFile>true</useMissingFile>
+                        <sortArtifactByName>true</sortArtifactByName>
+                        <!-- The file with the list of licenses, for those which can't be found automatically -->
+                        <missingFile>src/license/THIRD-PARTY.properties</missingFile>
+                        <!-- Same as 'missingFile' but in XML, probably -->
+                        <licensesConfigFile>src/license/licenses-manual.xml</licensesConfigFile>
+                        <!-- All licenses which could automatically be fetched. About the current module only.-->
+                        <licensesOutputFile>src/license/licenses-generated.xml</licensesOutputFile>
+                        <!-- Dump the text of all licenses of third parties. About the current module only. -->
+                        <licensesOutputDirectory>src/license/text</licensesOutputDirectory>
+                        <!-- A list of dependencies for the subtree and their licenses -->
+                        <thirdPartyFilename>THIRD-PARTY-included-modules.txt</thirdPartyFilename>
+                        <!-- Where to put the THIRD-PARTY.txt file -->
+                        <outputDirectory>${project.basedir}/src/license</outputDirectory>
+                        <!-- In the binary distribution, we exclude libraries which are only compiled against, as long
+                             as they're not GPL. Atlassian Confluence is considered with a developer license. -->
+                        <includedScopes>compile</includedScopes>
+                        <licenseMerges>
+                          <licenseMerge>Apache License 2.0|The Apache Software License, Version 2.0|Apache License, Version 2.0|Apache Public License 2.0|Apache 2</licenseMerge>
+                        </licenseMerges>
+                        <!-- We exclude artifacts which constantly cause the THIRD-PARTY.properties file to be
+                             modified and for which we know the license is from Atlassian -->
+                        <excludedArtifacts>xercesImpl</excludedArtifacts>
+
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>install-npm</id>
+                        <!-- If you want to build the final jar, execute: mvn install -Prelease -pl requirementyogi
+                             - If you just execute 'mvn install' from the subfolder, it won't minify the resources
+                             - If you just execute 'mvn install -Prelease' from the subfolder, it will fail because it
+                             is not in the root directory (yes UglifyJS is curernt-dir dependent).
+                         -->
+
+                        <!-- We chose the phase 'process-resources' because it actually compiles/minifies the resources. Also,
+                             "generate-resources" didn't work because AMPS would override them. -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${npm.skip}</skip>
+                            <executable>npm</executable>
+                            <!-- If this doesn't work, please run `npm install` in the root directory -->
+                            <commandlineArgs>install</commandlineArgs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <rules>
+                        <requireMavenVersion>
+                            <!-- It's for AMPS, it fails under that -->
+                            <version>3.8.4</version>
+                        </requireMavenVersion>
+                        <requireJavaVersion>
+                            <!-- We compile with a target of Java 8, to be compatible with Jira <9.10 and <C8.0,
+                                 but with the JDK11, because the Java-to-Typescript transformation requires
+                                 it.
+                                 -->
+                            <version>[11, 18)</version>
+                        </requireJavaVersion>
+
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>extensions</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>extensions-comala</module>
+                <module>extensions-reqif</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <webpack.profile>webpack-dev-confluence</webpack.profile>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+        <profile>
+            <id>idea</id>
+            <properties>
+                <!--
+                    Activate this profile in your IntelliJ IDEA, so you compile against the latest version of
+                    Jira and Confluence, and you see the warnings.
+
+                    Bonus: Since 'mvn install' compiles against the old version, you also see what compiles
+                    against the old version.
+                 -->
+                <jira.version>${jira.eap.version}</jira.version>
+                <confluence.version>${confluence.eap.version}</confluence.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>vulnerabilities</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- Suggest to upgrade our libraries, plugins and properties -->
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>display-dependency-updates</goal>
+                                    <goal>display-plugin-updates</goal>
+                                    <goal>display-property-updates</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <configuration>
+                            <failBuildOnCVSS>7</failBuildOnCVSS>
+                            <skipProvidedScope>true</skipProvidedScope>
+                            <skipRuntimeScope>true</skipRuntimeScope>
+                            <nvdApiServerId>nvd</nvdApiServerId>
+                            <nvdValidForHours>24</nvdValidForHours>
+                            <nvdApiDelay>6000</nvdApiDelay> <!-- Wait 6 seconds between each request -->
+                            <suppressionFile>src/main/other/owasp-vulnerability-suppression.xml</suppressionFile>
+                            <!-- Set up a proxy on Bamboo using the instructions at https://github.com/stevespringett/nist-data-mirror .
+                                 Do NOT make it accessible from the outer world.
+                                 docker build \-\-rm -t sspringett/nvdmirror
+                                 docker run -dit \-\-name mirror -p 3221:3221 sspringett/nvdmirror
+                            <cveUrlBase>http://localhost:3221/nvdcve-1.1-%d.json.gz</cveUrlBase>
+                            <cveUrlModified>http://localhost:3221/nvdcve-1.1-modified.json.gz</cveUrlModified>
+                            -->
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                      </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>audit-npm</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>${npm.skip}</skip>
+                                    <executable>npm</executable>
+                                    <commandlineArgs>audit</commandlineArgs>
+                                    <successCodes>1,0</successCodes>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npm-outdated-dependencies</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>${npm.skip}</skip>
+                                    <executable>npm</executable>
+                                    <commandlineArgs>outdated</commandlineArgs>
+                                    <successCodes>1,0</successCodes>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>licenses-npm</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>${npm.skip}</skip>
+                                    <executable>npm</executable>
+                                    <commandlineArgs>run licenses</commandlineArgs>
+                                    <successCodes>0</successCodes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>${libs.dependency-check-maven.version}</version>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>aggregate</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+    </profiles>
+
+    <properties>
+
+        <!-- #################################### -->
+        <!-- ### Jira and Confluence versions ### -->
+        <!-- #################################### -->
+        <!-- See https://docs.requirementyogi.com/data-center/compatibility-matrix -->
+
+        <!-- We support J9.4 until November 2024 -->
+        <jira.version>9.4.0</jira.version>
+        <!-- We support C7.19 until July 2024 -->
+        <confluence.version>7.19.0</confluence.version>
+        <confluence.data.version>${confluence.version}</confluence.data.version>
+
+        <!-- EAP versions, or the latest release of each product, to keep up-to-date -->
+        <jira.eap.version>9.12.1</jira.eap.version>
+        <confluence.eap.version>8.8.0-beta1</confluence.eap.version>
+
+
+        <!-- ############################################ -->
+        <!-- ### Jira and Confluence plugins and libs ### -->
+        <!-- ############################################ -->
+        <!-- In Confluence 7.19.11, AO will be 3.6.7 -->
+        <atlz.libs.ao.version>3.6.7</atlz.libs.ao.version>
+        <atlz.libs.amps.version>8.13.1</atlz.libs.amps.version>
+        <atlz.libs.atlassian-rest-common>7.2.0</atlz.libs.atlassian-rest-common>
+        <atlz.libs.upm.version>6.1.3</atlz.libs.upm.version>
+        <confluence.compat>1.6.1</confluence.compat>
+        <confluence.jsr>1.1.1</confluence.jsr>
+        <confluence.plugins.business-blueprint>18.8.14</confluence.plugins.business-blueprint>
+        <confluence.plugins.confluence-space-ia>18.7.0</confluence.plugins.confluence-space-ia>
+        <confluence.plugins.confluence-create-content-plugin>16.1.0</confluence.plugins.confluence-create-content-plugin>
+        <confluence.plugins.mywork-api>8.4.3</confluence.plugins.mywork-api>
+        <confluence.plugins.confluence-feature-discovery-plugin>18.7.3</confluence.plugins.confluence-feature-discovery-plugin>
+        <confluence.plugins.atlassian-app-cloud-migration-listener>1.3.1</confluence.plugins.atlassian-app-cloud-migration-listener>
+
+        <!-- The latest is 1.8.0, but it works perfectly well with all versions back to, at least, 1.6.1 -->
+        <psea.version>1.9-SNAPSHOT</psea.version>
+
+
+        <!-- ############################# -->
+        <!-- ### Just normal libraries ### -->
+        <!-- ############################# -->
+        <libs.junit.integration-tests.version>4.13.2</libs.junit.integration-tests.version>
+        <libs.junit.version>5.10.2</libs.junit.version>
+        <libs.mockito.version>5.10.0</libs.mockito.version>
+        <libs.gson.version>2.10.1</libs.gson.version>
+        <libs.guava.version>33.0.0-jre</libs.guava.version>
+        <libs.commons-lang3.version>3.14.0</libs.commons-lang3.version>
+        <libs.commons-text.version>1.11.0</libs.commons-text.version>
+        <libs.jsoup.version>1.17.2</libs.jsoup.version>
+        <libs.dependency-check-maven.version>9.0.9</libs.dependency-check-maven.version>
+
+
+        <!-- ############################# -->
+        <!-- ###         Build         ### -->
+        <!-- ############################# -->
+        <!-- Build properties -->
+        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <allowGoogleTracking>false</allowGoogleTracking>
+        <downloadSources>true</downloadSources>
+        <downloadJavadocs>true</downloadJavadocs>
+
+        <!-- Build flags -->
+        <skipWebpack>false</skipWebpack>
+        <npm.skip>${skipWebpack}</npm.skip>
+        <skipTests>${skipWebpack}</skipTests>
+    </properties>
+</project>

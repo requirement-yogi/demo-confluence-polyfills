@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>requirementyogi-parent</artifactId>
+        <groupId>com.playsql</groupId>
+        <version>3.8-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>confluence-parent-pom</artifactId>
+    <name>confluence-parent-pom</name>
+    <description>
+        Parent pom.xml for all libraries that use Confluence
+    </description>
+
+    <packaging>pom</packaging>
+
+    <organization>
+        <name>Requirement Yogi</name>
+        <url>https://www.requirementyogi.com/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Commercial</name>
+            <url>https://docs.requirementyogi.com/legal/eula</url>
+            <comments>The Requirement Yogi EULA applies to this software - See https://docs.requirementyogi.com/legal/eula</comments>
+        </license>
+    </licenses>
+
+    <dependencies>
+        <!-- ####################################### -->
+        <!-- Classic libraries -->
+        <!-- ####################################### -->
+        <dependency>
+            <groupId>com.playsql</groupId>
+            <artifactId>utils</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${libs.gson.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${libs.commons-lang3.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.11.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+          <!-- To decode the requirement's HTMLExcerpt into text -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${libs.jsoup.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${libs.guava.version}</version>
+            <!-- We're bringing it in, since Confluence stops shipping it -->
+            <scope>compile</scope>
+        </dependency>
+
+
+        <!-- ###################################################### -->
+        <!-- Polyfills (Classes we compile with, but don't include) -->
+        <!-- ###################################################### -->
+        <dependency>
+            <!-- For Confluence <8.5 compatibility-->
+            <groupId>com.requirementyogi.plugins</groupId>
+            <artifactId>atlassian-polyfills</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- ####################################### -->
+        <!-- Confluence -->
+        <!-- ####################################### -->
+        <dependency>
+            <groupId>com.atlassian.confluence</groupId>
+            <artifactId>confluence</artifactId>
+            <version>${confluence.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.atlassian.confluence.plugins</groupId>
+                    <artifactId>confluence-create-content-plugin</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-text</groupId>
+                    <artifactId>commons-text</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-text</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xercesImpl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-library</artifactId>
+                </exclusion>
+                <exclusion>
+                    <!-- So that the vulnerability build doesn't yell at us -->
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.atlassian.fugue</groupId>
+                    <artifactId>fugue</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.atlassian.fugue</groupId>
+                    <artifactId>fugue</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <!-- So that the vulnerability build doesn't yell at us -->
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <!-- ####################################### -->
+        <!-- Confluence-provided libraries -->
+        <!-- ####################################### -->
+        <dependency>
+            <groupId>com.atlassian.confluence.compat</groupId>
+            <artifactId>confluence-compat-lib</artifactId>
+            <version>${confluence.compat}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Now, the dependencies provided by Confluence -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.32</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <!-- This version is in C8.7.1 -->
+            <version>5.3.30</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.activeobjects</groupId>
+            <artifactId>activeobjects</artifactId>
+            <version>${atlz.libs.ao.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.activeobjects</groupId>
+            <artifactId>activeobjects-core</artifactId>
+            <version>${atlz.libs.ao.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- *************************************** -->
+        <!--         For REST WS                      -->
+        <!-- *************************************** -->
+        <dependency>
+            <groupId>com.atlassian.plugins.rest</groupId>
+            <artifactId>atlassian-rest-common</artifactId>
+            <version>${atlz.libs.atlassian-rest-common}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>jsr311-api</artifactId>
+            <version>${confluence.jsr}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- *************************************** -->
+        <!--         For UPM licensing               -->
+        <!-- *************************************** -->
+        <dependency>
+            <groupId>com.atlassian.upm</groupId>
+            <artifactId>licensing-api</artifactId>
+            <version>${atlz.libs.upm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.osgi</groupId>
+            <artifactId>spring-osgi-core</artifactId>
+            <version>1.1.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.upm</groupId>
+            <artifactId>upm-api</artifactId>
+            <version>${atlz.libs.upm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- *************************************** -->
+        <!--            Test dependencies            -->
+        <!-- *************************************** -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>6.1.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <!-- 1.7.36 in Confluence 8.5.0 -->
+            <version>1.7.32</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- This is required to be able to use Confluence's "cleanQuietly()" method during the tests -->
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.12.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>license-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>download-licenses2</id>
+                                <!-- This phase is before 'package' so the license information is included in the binary
+                                     distribution. -->
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>download-licenses</goal>
+                                    <goal>add-third-party</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

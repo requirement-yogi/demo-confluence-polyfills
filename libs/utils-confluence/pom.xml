@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>confluence-parent-pom</artifactId>
+        <groupId>com.playsql</groupId>
+        <version>3.8-SNAPSHOT</version>
+        <relativePath>../confluence-parent-pom/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>utils-confluence</artifactId>
+    <name>Confluence Utils library</name>
+    <description>Utils that are specific to our Confluence apps. In theory, this common package should be included in
+        all our Confluence apps: RY, T&amp;C, ReqIF, Comala, etc.</description>
+
+    <packaging>jar</packaging>
+
+    <organization>
+        <name>Requirement Yogi</name>
+        <url>https://www.requirementyogi.com/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Commercial</name>
+            <url>https://docs.requirementyogi.com/legal/eula</url>
+            <comments>The Requirement Yogi EULA applies to this software - See https://docs.requirementyogi.com/legal/eula</comments>
+        </license>
+    </licenses>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.playsql</groupId>
+            <artifactId>confluence-polyfills-719</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.playsql</groupId>
+            <artifactId>confluence-polyfills-720</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.playsql</groupId>
+            <artifactId>confluence-polyfills-850</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

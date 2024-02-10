@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>confluence-parent-pom</artifactId>
+        <groupId>com.playsql</groupId>
+        <version>3.8-SNAPSHOT</version>
+        <relativePath>../confluence-parent-pom/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>confluence-polyfills-base</artifactId>
+    <name>Polyfills (base)</name>
+    <description>
+        Interface definitions and abstract classes, which will be implemented differently for each Confluence version
+    </description>
+
+    <packaging>jar</packaging>
+
+    <organization>
+        <name>Requirement Yogi</name>
+        <url>https://www.requirementyogi.com/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Commercial</name>
+            <url>https://docs.requirementyogi.com/legal/eula</url>
+            <comments>The Requirement Yogi EULA applies to this software - See https://docs.requirementyogi.com/legal/eula</comments>
+        </license>
+    </licenses>
+
+</project>

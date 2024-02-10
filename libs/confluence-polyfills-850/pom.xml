@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>confluence-parent-pom</artifactId>
+        <groupId>com.playsql</groupId>
+        <version>3.8-SNAPSHOT</version>
+        <relativePath>../confluence-parent-pom/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>confluence-polyfills-850</artifactId>
+    <name>Polyfills (Confluence 8.5.0)</name>
+    <description>Implementations of the polyfills for Confluence 8.5.0</description>
+
+    <packaging>jar</packaging>
+
+    <organization>
+        <name>Requirement Yogi</name>
+        <url>https://www.requirementyogi.com/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Commercial</name>
+            <url>https://docs.requirementyogi.com/legal/eula</url>
+            <comments>The Requirement Yogi EULA applies to this software - See https://docs.requirementyogi.com/legal/eula</comments>
+        </license>
+    </licenses>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.playsql</groupId>
+            <artifactId>confluence-polyfills-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <!-- It changes the parent pom import of Confluence -->
+        <confluence.version>8.5.0</confluence.version>
+    </properties>
+</project>

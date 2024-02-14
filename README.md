@@ -36,7 +36,7 @@ The genius parts:
 What this repository doesn't have:
 - We don't publish our source code,
 - It clearly doesn't compile at all, those are just excerpts of files,
-- No compatibility with Confluence 9.0.
+- No compatibility with Confluence 9.0, so I don't know whether it matches *all* usecases,
 - No usage of `confluence-plugin-platform-pom`, which is the new recommended thing. Instead we just rely on the direct
   `confluence` dependency (in other words, `confluence.jar` and its dependencies), which is supposed to be a malpractice but works
   really well, at least up to Confluence 8.8.
@@ -50,5 +50,6 @@ What this repository doesn't have:
 And, surprise, their code is much better prepared to go public! Go have a look at:
 
 - https://github.com/collabsoft-net/example-jira-app-with-docker-compose
+- https://github.com/collabsoft-net/example-confluence-app-with-docker-compose
 - In general, Collabsoft is heroic in providing resources for fellow vendors: https://github.com/collabsoft-net
 - I think someone even published an entire stack for their DC apps, please give me the URL!
